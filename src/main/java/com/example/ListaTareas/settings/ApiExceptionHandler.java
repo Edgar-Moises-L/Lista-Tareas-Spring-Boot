@@ -9,6 +9,12 @@ import org.springframework.web.context.request.WebRequest;
 public class ApiExceptionHandler {
     @ExceptionHandler(value = RuntimeException.class)
     public ResponseEntity<Object> handlerException(RuntimeException exception, WebRequest request){
-        return ResponseEntity.badRequest().body(exception.getMessage());
+        return ResponseEntity.badRequest().body("Runtime Exception: " + exception.getMessage());
+    }
+    @ExceptionHandler(value = IllegalArgumentException.class)
+    public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException exception, WebRequest request) {
+        return ResponseEntity.badRequest().body("Illegal Argument: " + exception.getMessage());
     }
 }
+
+

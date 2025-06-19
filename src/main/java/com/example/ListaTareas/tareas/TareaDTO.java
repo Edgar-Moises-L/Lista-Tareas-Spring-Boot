@@ -11,6 +11,13 @@ public class TareaDTO {
     private String estado;
     private String prioridad;
 
+
+
+
+
+
+
+
     public Long getId() {
         return id;
     }
