@@ -1,6 +1,8 @@
 package com.example.ListaTareas.tareas;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,28 +14,34 @@ public class TareaController {
     private TareaService tareaService;
 
     @GetMapping
-    public List<TareaDTO> getAll(){
-        return tareaService.getAll();
+    public ResponseEntity<List<TareaDTO>> getAll() {
+        List<TareaDTO> tareas = tareaService.getAll();
+        return ResponseEntity.ok(tareas);
     }
 
     @GetMapping("/{id}")
-    public TareaDTO getById(@PathVariable Long id){
-        return tareaService.getById(id);
+    public ResponseEntity<TareaDTO> getById(@PathVariable Long id) {
+        TareaDTO tarea = tareaService.getById(id);
+        return ResponseEntity.ok(tarea);
     }
 
     @PostMapping
-    public TareaDTO addTarea(@RequestBody TareaDTO tareaDTO){
-        return tareaService.addTarea(tareaDTO);
+    public ResponseEntity<TareaDTO> addTarea(@RequestBody TareaDTO tareaDTO) {
+        TareaDTO tarea = tareaService.addTarea(tareaDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(tarea);
     }
 
     @PutMapping("/{id}")
-    public TareaDTO updateTarea( @RequestBody TareaDTO tareaDTO, @PathVariable Long id){
-        return tareaService.updateTarea(tareaDTO,id);
+    public ResponseEntity<TareaDTO> updateTarea(@RequestBody TareaDTO tareaDTO, @PathVariable Long id) {
+        TareaDTO tarea = tareaService.updateTarea(tareaDTO, id);
+        return ResponseEntity.ok(tarea);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTarea(@PathVariable Long id){
+    public ResponseEntity<Void> deleteTarea(@PathVariable Long id) {
         tareaService.deleteTarea(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
 }
+
+
