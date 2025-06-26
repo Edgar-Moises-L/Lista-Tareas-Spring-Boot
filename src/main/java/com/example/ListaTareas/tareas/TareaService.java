@@ -8,23 +8,26 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class TareaService {
+public class TareaService implements ITareaService {
     @Autowired
     private TareaRepository tareaRepository;
     @Autowired
     private TareaMapper tareaMapper;
 
+    @Override
     public List<TareaDTO> getAll() {
         return tareaRepository.findAll().stream()
                 .map(tareaMapper::toDto)
                 .collect(Collectors.toList());
     }
 
+    @Override
     public TareaDTO getById(Long id) {
         Tarea tarea = tareaRepository.findById(id).orElseThrow(() -> new RuntimeException(("No se encontro el id " + id)));
         return tareaMapper.toDto(tarea);
     }
 
+    @Override
     @Transactional
     public TareaDTO addTarea(TareaDTO tareaDTO) {
         Tarea tarea = tareaMapper.toEntity(tareaDTO);
@@ -33,6 +36,7 @@ public class TareaService {
         return tareaMapper.toDto(tareaNueva);
     }
 
+    @Override
     @Transactional
     public TareaDTO updateTarea(TareaDTO tareaDTO, Long id) {
         Tarea tareaGuardada = tareaRepository.findById(id).
@@ -52,6 +56,7 @@ public class TareaService {
 
     }
 
+    @Override
     @Transactional
     public void deleteTarea(Long id) {
         if (!tareaRepository.existsById(id)) {
@@ -59,6 +64,7 @@ public class TareaService {
         }
         tareaRepository.deleteById(id);
     }
+
 
     private void validarRequest(Tarea tarea) {
 

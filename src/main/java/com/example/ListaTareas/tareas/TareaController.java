@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping("/api/tareas")
 public class TareaController {
     @Autowired
-    private TareaService tareaService;
+    private ITareaService tareaService;
 
     @GetMapping
     public ResponseEntity<List<TareaDTO>> getAll() {
